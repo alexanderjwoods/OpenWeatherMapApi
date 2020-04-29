@@ -44,7 +44,7 @@ namespace OpenWeatherMapApi
 
 			using(_client)
 			{
-				response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BuildUri(@"http://api.openweathermap.org/data/2.5/weather", parameters)));
+				response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BuildUri(@"https://api.openweathermap.org/data/2.5/weather", parameters)));
 			}
 
 			if (response.IsSuccessStatusCode)
