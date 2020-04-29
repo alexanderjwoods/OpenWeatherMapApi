@@ -67,7 +67,7 @@ namespace OpenWeatherMapApi.Tests
 			var client = new OpenWeatherMapClient(_apiKey, httpClient);
 
 			// Act
-			var response = await client.GetCurrentWeatherByZip("48188");
+			var response = await client.GetCurrentWeatherByZip("12345");
 
 			// Assert
 			Assert.IsInstanceOf<CurrentWeatherResponse>(response);
