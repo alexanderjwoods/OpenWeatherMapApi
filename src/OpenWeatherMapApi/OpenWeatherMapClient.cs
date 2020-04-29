@@ -28,7 +28,7 @@ namespace OpenWeatherMapApi
 		/// </summary>
 		/// <param name="zip">Zip code for current weather</param>
 		/// <param name="countryCode">Optional: Country Code corresponding to zip.  US by default.</param>
-		public async Task<CurrentWeatherResponse> GetCurrentWeatherByZip(string zip, string countryCode = "us")
+		public async Task<CurrentWeatherResponse> GetCurrentWeatherByZip(string zip, string countryCode = "us", TemperatureUnit temperatureUnit = TemperatureUnit.Imperial)
 		{
 			if(string.IsNullOrEmpty(zip))
 			{
@@ -37,7 +37,8 @@ namespace OpenWeatherMapApi
 
 			var parameters = new Dictionary<string, string>()
 			{
-				{ "zip", $"{zip},{countryCode}" }
+				{ "zip", $"{zip},{countryCode}" },
+				{ "units", temperatureUnit.ToString() }
 			};
 
 			HttpResponseMessage response;
@@ -67,7 +68,7 @@ namespace OpenWeatherMapApi
 
 			sb.Append($"appid={_apiKey}");
 
-			return new Uri(sb.ToString());
+			return new Uri(sb.ToString().ToLower());
 		}
 	}
 }
