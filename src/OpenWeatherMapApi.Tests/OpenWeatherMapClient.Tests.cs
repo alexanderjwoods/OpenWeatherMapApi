@@ -12,7 +12,7 @@ namespace OpenWeatherMapApi.Tests
 {
 	public class OpenWeatherMapClientTests
 	{
-		private const string _apiKey = "bd1d837da34ccb97a6d402d38fab4e75"; //YOUR API KEY HERE
+		private const string _apiKey = "YOURAPIKEY"; //YOUR API KEY HERE
 		private static string _goodCurrentWeatherResponsePath;
 		private static string _badCurrentWeatherResponsePath;
 
