@@ -91,5 +91,46 @@ namespace OpenWeatherMapApi.Tests
 			// Assert
 			Assert.ThrowsAsync<Exception>(async () => await client.GetCurrentWeatherByZip("55555"));
 		}
+
+		[Test]
+		public async Task GetCurrentWeatherByCoords_CurrentWeatherResponse_ValidCoords()
+		{
+			// Arrange
+			var json = File.ReadAllText(_goodCurrentWeatherResponsePath);
+			var stringContent = new StringContent(json);
+			var fakeHttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+			{
+				Content = stringContent
+			};
+			var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpResponseMessage);
+			var httpClient = new HttpClient(fakeHttpMessageHandler);
+
+			var client = new OpenWeatherMapClient(_apiKey, httpClient);
+
+			// Act
+			var response = await client.GetCurrentWeatherByCoords(139, 35);
+
+			// Assert
+			Assert.IsInstanceOf<CurrentWeatherResponse>(response);
+		}
+
+		[Test]
+		public void GetCurrentWeatherByCoords_Exception_InvalidCoords()
+		{
+			// Arrange
+			var json = File.ReadAllText(_badCurrentWeatherResponsePath);
+			var stringContent = new StringContent(json);
+			var fakeHttpResponseMessage = new HttpResponseMessage(HttpStatusCode.NotFound)
+			{
+				Content = stringContent
+			};
+			var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpResponseMessage);
+			var httpClient = new HttpClient(fakeHttpMessageHandler);
+
+			var client = new OpenWeatherMapClient(_apiKey, httpClient);
+
+			// Assert
+			Assert.ThrowsAsync<Exception>(async () => await client.GetCurrentWeatherByCoords(1390, 350));
+		}
 	}
 }
