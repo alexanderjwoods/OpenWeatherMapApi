@@ -189,5 +189,56 @@ namespace OpenWeatherMapApi.Tests
 			// Assert
 			Assert.ThrowsAsync<ArgumentNullException>(async () => await client.GetCurrentWeatherByCityName(city));
         }
+
+		[Test]
+		public void GetCurrentWeatherByCityId_ArgEx_IdLessThanOne()
+        {
+			// Arrange
+			var client = new OpenWeatherMapClient(_apiKey);
+
+			// Assert
+			Assert.ThrowsAsync<ArgumentException>(async () => await client.GetCurrentWeatherByCityId(-1));
+        }
+
+		[Test]
+		public void GetCurrentWeatherByCityId_Exception_BadId()
+        {
+			// Arrange
+			var json = File.ReadAllText(_badCurrentWeatherResponsePath);
+			var stringContent = new StringContent(json);
+			var fakeHttpResponseMessage = new HttpResponseMessage(HttpStatusCode.NotFound)
+			{
+				Content = stringContent
+			};
+			var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpResponseMessage);
+			var httpClient = new HttpClient(fakeHttpMessageHandler);
+
+			var client = new OpenWeatherMapClient(_apiKey, httpClient);
+
+			// Assert
+			Assert.ThrowsAsync<Exception>(async () => await client.GetCurrentWeatherByCityId(1));
+		}
+
+		[Test]
+		public async Task GetCurrentWeatherByCityId_CurrentWeatherResponse_ValidId()
+        {
+			// Arrange
+			var json = File.ReadAllText(_goodCurrentWeatherResponsePath);
+			var stringContent = new StringContent(json);
+			var fakeHttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+			{
+				Content = stringContent
+			};
+			var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpResponseMessage);
+			var httpClient = new HttpClient(fakeHttpMessageHandler);
+
+			var client = new OpenWeatherMapClient(_apiKey, httpClient);
+
+			// Act
+			var response = await client.GetCurrentWeatherByCityId(1);
+
+			// Assert
+			Assert.IsInstanceOf<CurrentWeatherResponse>(response);
+		}
 	}
 }

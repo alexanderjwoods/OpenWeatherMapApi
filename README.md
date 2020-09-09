@@ -16,8 +16,9 @@ Endpoints currently supported:
 	City Name
 	Coordinates
 	Zip Code
-Endpoints to be integrated:
 	City Code
+	
+Language Support and XML support coming soon!
 
 #### Contributers
 If you would like to contribute, simply send a PR!

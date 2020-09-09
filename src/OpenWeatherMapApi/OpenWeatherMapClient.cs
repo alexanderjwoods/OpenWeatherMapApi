@@ -133,6 +133,38 @@ namespace OpenWeatherMapApi
 			throw new Exception(await response.Content.ReadAsStringAsync());
 		}
 
+		/// <summary>
+		/// Get Weather based on City Id.  City ID's available at http://bulk.openweathermap.org/sample/
+		/// </summary>
+		/// <param name="id">City Id</param>
+		/// <returns></returns>
+		public async Task<CurrentWeatherResponse> GetCurrentWeatherByCityId(int id)
+        {
+			if (id < 1)
+            {
+				throw new ArgumentException(nameof(id));
+            }
+
+			var parameters = new Dictionary<string, string>()
+			{
+				{ "id", $"{id}" }
+			};
+
+			HttpResponseMessage response;
+
+			using (_client)
+			{
+				response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BuildUri(@"https://api.openweathermap.org/data/2.5/weather", parameters)));
+			}
+
+			if (response.IsSuccessStatusCode)
+			{
+				return CurrentWeatherResponse.FromJson(await response.Content.ReadAsStringAsync());
+			}
+
+			throw new Exception(await response.Content.ReadAsStringAsync());
+		}
+
 		private Uri BuildUri(string baseUrl, Dictionary<string, string> parameters)
 		{
 			var sb = new StringBuilder();
