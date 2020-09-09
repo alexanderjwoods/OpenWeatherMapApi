@@ -141,12 +141,12 @@ namespace OpenWeatherMapApi.Responses
 
     public partial class CurrentWeatherResponse
     {
-        public static CurrentWeatherResponse FromJson(string json) => JsonConvert.DeserializeObject<CurrentWeatherResponse>(json, OpenWeatherMapApi.Responses.Converter.Settings);
+        public static CurrentWeatherResponse FromJson(string json) => JsonConvert.DeserializeObject<CurrentWeatherResponse>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this CurrentWeatherResponse self) => JsonConvert.SerializeObject(self, OpenWeatherMapApi.Responses.Converter.Settings);
+        public static string ToJson(this CurrentWeatherResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter

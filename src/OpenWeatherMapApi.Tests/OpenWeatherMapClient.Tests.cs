@@ -12,7 +12,7 @@ namespace OpenWeatherMapApi.Tests
 {
 	public class OpenWeatherMapClientTests
 	{
-		private const string _apiKey = "YOURAPIKEY"; //YOUR API KEY HERE
+		private const string _apiKey = "YOURAPIKEY";
 		private static string _goodCurrentWeatherResponsePath;
 		private static string _badCurrentWeatherResponsePath;
 
@@ -132,5 +132,62 @@ namespace OpenWeatherMapApi.Tests
 			// Assert
 			Assert.ThrowsAsync<Exception>(async () => await client.GetCurrentWeatherByCoords(1390, 350));
 		}
+
+		[TestCase("Detroit", "", "")]
+		[TestCase("Detroit", "Michigan", "")]
+		[TestCase("Detroit", "Michigan", "USA")]
+		[TestCase("Dublin", "", "IE")]
+		public async Task GetCurrentWeatherByCityName_CurrentWeatherResponse_ValidCity(string city, string state, string country)
+        {
+			// Arrange
+			var json = File.ReadAllText(_goodCurrentWeatherResponsePath);
+			var stringContent = new StringContent(json);
+			var fakeHttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+			{
+				Content = stringContent
+			};
+			var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpResponseMessage);
+			var httpClient = new HttpClient(fakeHttpMessageHandler);
+
+			var client = new OpenWeatherMapClient(_apiKey, httpClient);
+
+			// Act
+			var response = await client.GetCurrentWeatherByCityName(city, state, country);
+
+			// Assert
+			Assert.IsInstanceOf<CurrentWeatherResponse>(response);
+
+		}
+
+		[Test]
+		public void GetCurrentWeatherByCityName_Exception_InvalidCity()
+        {
+			// Arrange
+			var json = File.ReadAllText(_badCurrentWeatherResponsePath);
+			var stringContent = new StringContent(json);
+			var fakeHttpResponseMessage = new HttpResponseMessage(HttpStatusCode.NotFound)
+			{
+				Content = stringContent
+			};
+			var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpResponseMessage);
+			var httpClient = new HttpClient(fakeHttpMessageHandler);
+
+			var client = new OpenWeatherMapClient(_apiKey, httpClient);
+
+			// Assert
+			Assert.ThrowsAsync<Exception>(async () => await client.GetCurrentWeatherByCityName("123"));
+		}
+
+		[TestCase(null)]
+		[TestCase("")]
+		[TestCase(" ")]
+		public void GetCurrentWeatherByCityName_ArgNullEx_NullOrWhitespaceCity(string city)
+        {
+			// Arrange
+			var client = new OpenWeatherMapClient(_apiKey);
+			
+			// Assert
+			Assert.ThrowsAsync<ArgumentNullException>(async () => await client.GetCurrentWeatherByCityName(city));
+        }
 	}
 }

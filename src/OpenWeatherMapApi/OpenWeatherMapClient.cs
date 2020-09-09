@@ -29,6 +29,7 @@ namespace OpenWeatherMapApi
 		/// <param name="zip">Zip code for current weather</param>
 		/// <param name="countryCode">Optional: Country Code corresponding to zip.  US by default.</param>
 		/// <param name="temperatureUnit">Temperature Unit - Imperial by default.</param>
+		/// <returns></returns>
 		public async Task<CurrentWeatherResponse> GetCurrentWeatherByZip(string zip, string countryCode = "us", TemperatureUnit temperatureUnit = TemperatureUnit.Imperial)
 		{
 			if(string.IsNullOrEmpty(zip))
@@ -89,10 +90,53 @@ namespace OpenWeatherMapApi
 			throw new Exception(await response.Content.ReadAsStringAsync());
 		}
 
+		/// <summary>
+		/// Get Current weather using a city name
+		/// </summary>
+		/// <param name="city">City Name</param>
+		/// <param name="state">Optional: State Abbreviation (Only available for United States)</param>
+		/// <param name="country">Optional: ISO 3166 Country Code</param>
+		/// <returns></returns>
+		public async Task<CurrentWeatherResponse> GetCurrentWeatherByCityName(string city, string state =  "", string country = "")
+        {
+			if(string.IsNullOrWhiteSpace(city))
+            {
+				throw new ArgumentNullException(nameof(city));
+            }
+
+			var parameters = $"?q={city}";
+
+			if(!string.IsNullOrWhiteSpace(state))
+            {
+				parameters += $",{state}";
+            }
+
+			if (!string.IsNullOrWhiteSpace(country))
+			{
+				parameters += $",{country}";
+			}
+
+			parameters += $"&appId={_apiKey}";
+
+			HttpResponseMessage response;
+
+			using(_client)
+            {
+				response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, $@"https://api.openweathermap.org/data/2.5/weather{parameters}"));
+            }
+
+			if (response.IsSuccessStatusCode)
+			{
+				return CurrentWeatherResponse.FromJson(await response.Content.ReadAsStringAsync());
+			}
+
+			throw new Exception(await response.Content.ReadAsStringAsync());
+		}
+
 		private Uri BuildUri(string baseUrl, Dictionary<string, string> parameters)
 		{
 			var sb = new StringBuilder();
-			sb.Append($"{baseUrl}?");
+			sb.Append($"{ baseUrl}?");
 
 			foreach(var parameter in parameters)
 			{
