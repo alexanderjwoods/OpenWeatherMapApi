@@ -1,5 +1,4 @@
 <div align="center">
-![logo](logo.png)
 # OpenWeatherMapApi
 Classes to access and consume the Open Weather Map Api, found at https://www.openweathermap.org/api
 
