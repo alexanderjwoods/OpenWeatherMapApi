@@ -13,15 +13,6 @@ namespace OpenWeatherMapApi
 			{
 				KeyID = id;
 			}
-			public static class Parser
-			{
-				public static OpenWeatherMapAPIKey String(string id)
-				{
-					var keyapi = new OpenWeatherMapAPIKey();
-					keyapi.KeyID = id;
-					return keyapi;
-				}
-			}
 			public class PreparationEngine
 			{
 				public static string PrepareClientAPIKey(OpenWeatherMapAPIKey id)
