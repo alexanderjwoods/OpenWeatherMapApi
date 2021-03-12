@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenWeatherMapApi
 {
-	public class Keys
+	public class APIKeys
 	{
 		public struct OpenWeatherMapAPIKey
 		{
@@ -13,6 +13,13 @@ namespace OpenWeatherMapApi
 			{
 				KeyID = id;
 			}
+			public class KeyUtils
+            {
+				public static void DisposeKey(OpenWeatherMapAPIKey id)
+                {
+					id.KeyID = string.Empty;
+                }
+            }
 			public class PreparationEngine
 			{
 				public static string PrepareClientAPIKey(OpenWeatherMapAPIKey id)
