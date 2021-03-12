@@ -1,3 +1,4 @@
+<div align="center">
 # OpenWeatherMapApi
 Classes to access and consume the Open Weather Map Api, found [here](https://openweathermap.org/api)
 
@@ -22,3 +23,4 @@ Language Support and XML support coming soon!
 
 #### Contributers
 If you would like to contribute, simply send a PR!
+</div>
