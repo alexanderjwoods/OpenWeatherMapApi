@@ -186,7 +186,7 @@ namespace OpenWeatherMapApi
 		/// /// <param name="state">State Name</param>
 		/// /// <param name="country">Country Name</param>
 		/// <returns></returns>
-		public async Task<string> GetFromXML(string city, string state = "", string country = "")
+		public async Task<string> GetFromXMLCityName(string city, string state = "", string country = "")
         {
 			var parameters = $"?q={city}";
 
