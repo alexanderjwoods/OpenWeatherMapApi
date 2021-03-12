@@ -206,9 +206,9 @@ namespace OpenWeatherMapApi
 			}
 			if (response.IsSuccessStatusCode)
 			{
-				return await response.Content.ReadAsStringAsync();
+				return response.Content.ToString();
 			}
-			throw new Exception(await response.Content.ReadAsStringAsync());
+			throw new Exception(response.Content.ToString());
 		}
 	}
 }
