@@ -1,6 +1,6 @@
 <div align="center">
 # OpenWeatherMapApi
-Classes to access and consume the Open Weather Map Api, found [here](https://openweathermap.org/api)
+Classes to access and consume the Open Weather Map Api, found [here](https://www.openweathermap.org/api "OpenWeatherMap API")
 
 ## Usage
 Using this package is very simple.  Set up a client using your api key, and call the method you need.
