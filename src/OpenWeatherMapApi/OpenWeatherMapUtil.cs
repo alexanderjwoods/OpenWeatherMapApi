@@ -75,7 +75,7 @@ namespace OpenWeatherMapApi
         }
 		public class Tester
         {
-			public bool TestIfWorks(CurrentWeatherResponse response)
+			public bool Test(CurrentWeatherResponse response)
             {
 				try
                 {

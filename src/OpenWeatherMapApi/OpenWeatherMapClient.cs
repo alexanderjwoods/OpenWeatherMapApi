@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static OpenWeatherMapApi.Keys;
+using static OpenWeatherMapApi.Keys.OpenWeatherMapAPIKey;
 
 namespace OpenWeatherMapApi
 {
@@ -17,9 +19,9 @@ namespace OpenWeatherMapApi
 		/// Initializes a client to retrieve data from OpenWeaterMap
 		/// </summary>
 		/// <param name="apiKey">Your OpenWeatherMap Api Key</param>
-		public OpenWeatherMapClient(string apiKey, HttpClient client = null)
+		public OpenWeatherMapClient(OpenWeatherMapAPIKey apiKey, HttpClient client = null)
 		{
-			_apiKey = string.IsNullOrEmpty(apiKey) ? throw new ArgumentNullException(nameof(apiKey)) : apiKey;
+			_apiKey = string.IsNullOrEmpty(PreparationEngine.PrepareClientAPIKey(apiKey)) ? throw new ArgumentNullException(nameof(apiKey)) : PreparationEngine.PrepareClientAPIKey(apiKey);
 			_client = client ?? new HttpClient();
 		}
 
