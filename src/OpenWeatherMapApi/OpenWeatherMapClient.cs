@@ -14,7 +14,7 @@ namespace OpenWeatherMapApi
 		private readonly HttpClient _client;
 
 		/// <summary>
-		/// Initializes a client to retireve data from OpenWeaterMap
+		/// Initializes a client to retrieve data from OpenWeaterMap
 		/// </summary>
 		/// <param name="apiKey">Your OpenWeatherMap Api Key</param>
 		public OpenWeatherMapClient(string apiKey, HttpClient client = null)
