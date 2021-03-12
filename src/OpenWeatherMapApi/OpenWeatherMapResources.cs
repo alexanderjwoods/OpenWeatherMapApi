@@ -8,20 +8,14 @@ namespace OpenWeatherMapApi
 	{
 		public struct OpenWeatherMapAPIKey
 		{
-			public long KeyID { get; set; }
-			public OpenWeatherMapAPIKey(long id)
+			public string KeyID { get; set; }
+			public OpenWeatherMapAPIKey(string id)
 			{
 				KeyID = id;
 			}
 			public static class Parser
 			{
 				public static OpenWeatherMapAPIKey String(string id)
-				{
-					var keyapi = new OpenWeatherMapAPIKey();
-					keyapi.KeyID = Convert.ToInt64(id);
-					return keyapi;
-				}
-				public static OpenWeatherMapAPIKey Long(long id)
 				{
 					var keyapi = new OpenWeatherMapAPIKey();
 					keyapi.KeyID = id;
