@@ -76,22 +76,22 @@ namespace OpenWeatherMapApi
         }
 		public class Tester
         {
-			public string TestIfWorks(CurrentWeatherResponse response)
+			public bool TestIfWorks(CurrentWeatherResponse response)
             {
 				try
                 {
 					if (response != null)
                     {
-						return "Y";
+						return true;
                     }
 					else
                     {
-						return "N";
+						return false;
                     }
                 }
 				catch
                 {
-					return "N";
+					return false;
                 }
             }
         }
