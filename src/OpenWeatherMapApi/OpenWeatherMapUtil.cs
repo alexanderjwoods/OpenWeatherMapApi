@@ -20,7 +20,7 @@ namespace OpenWeatherMapApi
 			/// </summary>
 			/// <param name="weatherresponse">Your weather response</param>
 			/// <returns>string[]</returns>
-			public string[] ConvertTemp(CurrentWeatherResponse weatherresponse)
+			public string[] Convert(CurrentWeatherResponse weatherresponse)
 			{
 				List<string> w = new List<string>();
 				/// Weather comes first in the list.
