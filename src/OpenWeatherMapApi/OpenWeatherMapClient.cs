@@ -69,7 +69,6 @@ namespace OpenWeatherMapApi
 		/// <returns></returns>
 		public async Task<CurrentWeatherResponse> GetCurrentWeatherByCoords(double longitude, double latitude, TemperatureUnit temperatureUnit = TemperatureUnit.Imperial)
 		{
-
 			var parameters = new Dictionary<string, string>()
 			{
 				{ "lat", $"{latitude}" },
@@ -166,7 +165,6 @@ namespace OpenWeatherMapApi
 
 			throw new Exception(await response.Content.ReadAsStringAsync());
 		}
-
 		private Uri BuildUri(string baseUrl, Dictionary<string, string> parameters)
 		{
 			var sb = new StringBuilder();
@@ -180,6 +178,37 @@ namespace OpenWeatherMapApi
 			sb.Append($"appid={_apiKey}");
 
 			return new Uri(sb.ToString().ToLower());
+		}
+		/// <summary>
+		/// Gets raw XML weather data as string.
+		/// </summary>
+		/// <param name="city">City Name</param>
+		/// /// <param name="state">State Name</param>
+		/// /// <param name="country">Country Name</param>
+		/// <returns></returns>
+		public async Task<string> GetFromXML(string city, string state = "", string country = "")
+        {
+			var parameters = $"?q={city}";
+
+			if (!string.IsNullOrWhiteSpace(state))
+			{
+				parameters += $",{state}";
+			}
+			if (!string.IsNullOrWhiteSpace(country))
+			{
+				parameters += $",{country}";
+			}
+			parameters += $"&appId={_apiKey}";
+			HttpResponseMessage response;
+			using (_client)
+			{
+				response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, $@"https://api.openweathermap.org/data/2.5/weather/{parameters}"));
+			}
+			if (response.IsSuccessStatusCode)
+			{
+				return await response.Content.ReadAsStringAsync();
+			}
+			throw new Exception(await response.Content.ReadAsStringAsync());
 		}
 	}
 }
