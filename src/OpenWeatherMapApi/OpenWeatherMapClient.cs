@@ -18,7 +18,7 @@ namespace OpenWeatherMapApi
 		/// <summary>
 		/// Initializes a client to retrieve data from OpenWeaterMap
 		/// </summary>
-		/// <param name="apiKey">Your OpenWeatherMap Api Key</param>
+		/// <param name="apiKey">Your OpenWeatherMap Api Key in the struct OpenWeatherMapAPIKey.</param>
 		public OpenWeatherMapClient(OpenWeatherMapAPIKey apiKey, HttpClient client = null)
 		{
 			_apiKey = string.IsNullOrEmpty(PreparationEngine.PrepareClientAPIKey(apiKey)) ? throw new ArgumentNullException(nameof(apiKey)) : PreparationEngine.PrepareClientAPIKey(apiKey);

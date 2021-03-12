@@ -213,6 +213,17 @@ namespace OpenWeatherMapApi
 							return false;
 						}
 					}
+					public bool Overheating(CurrentWeatherResponse response)
+					{
+						if (response.Main.Temp.Value > 100)
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
 				}
 			}
 			/// <summary>
@@ -286,6 +297,17 @@ namespace OpenWeatherMapApi
 							return false;
 						}
 					}
+					public bool Overheating(CurrentWeatherResponse response)
+                    {
+						if (response.Main.Temp.Value > 38)
+                        {
+							return true;
+                        }
+						else
+                        {
+							return false;
+                        }
+                    }
 				}
 			}
         }

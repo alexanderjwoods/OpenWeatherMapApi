@@ -8,7 +8,7 @@ namespace OpenWeatherMapApi
 	{
 		public struct OpenWeatherMapAPIKey
 		{
-			public string KeyID { get; set; }
+			private string KeyID { get; set; }
 			public OpenWeatherMapAPIKey(string id)
 			{
 				KeyID = id;
