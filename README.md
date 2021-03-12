@@ -3,7 +3,7 @@
 Classes to access and consume the Open Weather Map Api, found at https://www.openweathermap.org/api
 
 ## Usage
-Using this package is very simple.  Set up a client using your api key, and call the method you need.
+Using this package is very simple.  Set up a client using an api key, and call the method you need.
 
 ```C#
 var apikey = new OpenWeatherMapAPIKey("YOURAPIKEY");
